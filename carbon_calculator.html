@@ -1,0 +1,365 @@
+<!--  NOTE: All values are made up  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Food Carbon Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: darkslategray;
+            padding-top: 50px
+        }
+    </style>
+
+    <style>
+        /* dropdown */
+        .dropbtn {
+            display: inline-block;
+            border-radius: 5px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 25px;
+            padding: 20px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #f4511e;
+        }
+
+        #myInput {
+            box-sizing: border-box;
+            background-image: url('searchicon.png');
+            background-position: 14px 12px;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            padding: 14px 20px 12px 45px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #myInput:focus { outline: 3px solid #ddd; }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f6f6f6;
+            min-width: 230px;
+            overflow: auto;
+            border: 1px solid #ddd;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* button */
+        .button {
+            display: inline-block;
+            border-radius: 5px;
+            background-color: rgb(197, 128, 0);
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 25px;
+            padding: 20px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .button:hover span {
+            padding-right: 25px;
+        }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+        .button.fade{
+            pointer-events: none;
+            opacity: 10%;
+        }
+    </style>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        .form-style-8{
+            width: 500px;
+            padding: 30px;
+            background: #FFFFFF;
+            margin: 50px auto;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+            -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+            -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+        }
+        .form-style-8 h2{
+            background: #4D4D4D;
+            text-transform: uppercase;
+            color: #797979;
+            font-size: 18px;
+            font-weight: 100;
+            padding: 20px;
+            margin: -30px -30px 30px -30px;
+        }
+        .form-style-8 input[type="text"],
+        .form-style-8 input[type="date"],
+        .form-style-8 input[type="datetime"],
+        .form-style-8 input[type="email"],
+        .form-style-8 input[type="number"],
+        .form-style-8 input[type="search"],
+        .form-style-8 input[type="time"],
+        .form-style-8 input[type="url"],
+        .form-style-8 input[type="password"],
+        .form-style-8 textarea,
+        .form-style-8 select
+        {
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            display: block;
+            width: 100%;
+            padding: 7px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: transparent;
+            margin-bottom: 10px;
+            font: 16px Arial, Helvetica, sans-serif;
+            height: 45px;
+        }
+        .form-style-8 textarea{
+            resize:none;
+            overflow: hidden;
+        }
+        .form-style-8 input[type="button"],
+        .form-style-8 input[type="submit"]{
+            -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+            box-shadow: inset 0px 1px 0px 0px #45D6D6;
+            background-color: #2CBBBB;
+            border: 1px solid #27A0A0;
+            display: inline-block;
+            cursor: pointer;
+            color: #FFFFFF;
+            font-size: 14px;
+            padding: 8px 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .form-style-8 input[type="button"]:hover,
+        .form-style-8 input[type="submit"]:hover {
+            background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+            background-color:#34CACA;
+        }
+        #finaldiv{
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .navbar-custom {
+            color: white;
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md  navbar-dark fixed-top navbar-custom">
+        <a class="navbar-brand">Main</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/links">Links</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/sources">Sources</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+
+    <div class="container">
+        <h1>SELECT A CATEGORY</h1>
+        <dl class="row">
+            <script>
+                function fade(a, b) {
+                    let NUMBUTTONS = b;
+                    for (var i=0; i<NUMBUTTONS; i++) {
+                        if (a != i) document.getElementById(i).classList.toggle('fade');
+                    }
+                }
+
+                function lemmefunction(a) {
+                    var arr = [
+                    ["Beef", "Lamb", "Pork"],
+                    ["Chicken", "Turkey", "Duck", "Goose", "Quail"],
+                    ["Fish", "Shellfish"],
+                    ["Milk", "Cheese", "Butter", "Ice Cream"],
+                    ["Tap", "Bottled", "Fancy bottled"],
+                    ["Apple"],
+                    ["Asparagus"],
+                    ["Chickpea"]];
+
+                    let NUMBUTTONS = 8;
+                    fade(a, NUMBUTTONS);
+
+                    if (document.getElementById("formdiv") != null) {
+                        erase("formdiv");
+                    }
+                    if (document.getElementById("finaldiv") != null) {
+                        erase("finaldiv");
+                    }
+                    if (document.getElementById("newdiv") != null) {
+                        erase("newdiv");
+                        return;
+                    }
+
+                    var y = document.createElement("div");
+                    y.className = "container";
+                    y.id = "newdiv";
+                    document.body.append(y);
+
+                    for (var i=0; i<arr[a].length; i++) {
+                        var x = document.createElement("button");
+                        x.className = "button";
+                        x.id = arr[a][i];
+                        var d = document.createTextNode(arr[a][i]);
+                        x.append(d);
+                        y.append(x);
+                    }
+
+                    for (var i=0; i<arr[a].length; i++) {
+                        document.getElementById(arr[a][i]).onclick = (function(i) { return function() { displayForm(y, arr[a][i].toLowerCase()); }}) (i);
+                    }
+                }
+
+                var total = 0; // Global variable for total CO2 emission.
+                function lemme2 (productType, quantity, val) {
+                    var arr = [
+                    ["Beef", 1,],
+                    ["Pork",2],
+                    ["Lamb",3],
+                    ["Chicken",4], ["Turkey",5], ["Duck",6], ["Goose",7], ["Quail",8],
+                    ["Fish",9], ["Shell Fish",10],
+                    ["Milk",11], ["Cheese",12], ["Butter",13], ["Ice Cream",14],
+                    ["Tap",15], ["Bottled",16], ["Fancy bottled",17],
+                    ["Apple",18],
+                    ["Asparagus",238746],
+                    ["Chickpea", 19]];
+
+                    for (var i = 0; i < arr.length; i++) {
+                        if (productType===arr[i][0].toLowerCase()) {
+                            total += ((quantity / 1000) * arr[i][1]);
+                        }
+                    }
+
+                    if (val == null) return(total);
+                    else return (total + val);
+                }
+
+                function displayForm(y, a) {
+                    if (document.getElementById("formdiv") != null) erase("formdiv");
+                    if (document.getElementById("finaldiv") != null) erase("finaldiv");
+
+                    var y = document.createElement("div");
+                    y.className = "form-style-8";
+                    y.id = "formdiv";
+                    var c = document.createTextNode("Enter number of servings of " + a + ":");
+                    y.append(c);
+                    document.body.append(y);
+
+                    var x = document.createElement("form");
+                    x.setAttribute("id","rform");
+                    y.append(x); //appends to a div
+
+                    var z = document.createElement("input");
+                    z.setAttribute("type","text");
+                    z.setAttribute("name","field1");
+                    z.setAttribute("id", "inputValue");
+                    z.setAttribute("placeholder","ex: 3");
+                    x.append(z); //appends textinput to form
+
+                    var food = a;
+                    var s = document.createElement("input");
+                    s.setAttribute("type","button");
+                    s.setAttribute("value","submit");
+                    s.onclick = function() {
+                        if (document.getElementById("finaldiv") != null) {
+                            erase("finaldiv");
+                        }
+
+                        var val = lemme2(a, document.getElementById('inputValue').value, document.getElementById("val"));
+
+                        var y = document.createElement("div");
+                        y.id = "finaldiv";
+                        var c = document.createTextNode("Total CO2 Emission: " + val.toFixed(3) + " kg");
+                        y.append(c);
+                        document.body.append(y);
+                    }
+                    x.append(s); //appends submit button to form
+                }
+
+                function erase(x) {
+                    try { document.getElementById(x).remove(); return; }
+                    catch(e) { /**/ }
+                }
+
+            </script>
+
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(0)" id="0"><span>Meats</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(1)" id="1"><span>Poultry</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(2)" id="2"><span>Seafood</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(3)" id="3"><span>Dairy</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(4)" id="4"><span>Water</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(5)" id="5"><span>Fruits</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(6)" id="6"><span>Vegetables</span></button>
+            <button class="button" style="vertical-align:middle" onclick="lemmefunction(7)" id="7"><span>Legumes</span></button>
+
+
+        </dl>
+    </div>
+
+</body>
+</html>
